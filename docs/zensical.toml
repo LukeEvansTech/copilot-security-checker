@@ -1,0 +1,54 @@
+# Zensical Configuration — copilot-security-checker
+[project]
+site_name = "copilot-security-checker"
+site_description = "PowerShell module to assess Microsoft 365 Copilot readiness and ongoing security posture"
+site_author = "Luke Evans"
+site_url = "https://LukeEvansTech.github.io/copilot-security-checker/"
+copyright = "Copyright © 2026 Luke Evans"
+
+docs_dir = "docs"
+site_dir = "site"
+use_directory_urls = true
+dev_addr = "localhost:8000"
+
+[project.theme]
+name = "material"
+variant = "modern"
+language = "en"
+
+[[project.theme.palette]]
+media = "(prefers-color-scheme: light)"
+scheme = "default"
+primary = "blue"
+accent = "light-blue"
+toggle_icon = "material/brightness-7"
+toggle_name = "Switch to dark mode"
+
+[[project.theme.palette]]
+media = "(prefers-color-scheme: dark)"
+scheme = "slate"
+primary = "blue"
+accent = "light-blue"
+toggle_icon = "material/brightness-4"
+toggle_name = "Switch to light mode"
+
+[project.theme.icon]
+repo = "fontawesome/brands/github"
+
+repo_url = "https://github.com/LukeEvansTech/copilot-security-checker/"
+repo_name = "LukeEvansTech/copilot-security-checker"
+edit_uri = "edit/main/docs/docs"
+
+[[nav]]
+Home = "index.md"
+
+[[nav]]
+"Cmdlets" = [
+  { "Test-CopilotReadiness" = "cmdlets/test-copilotreadiness.md" },
+  { "Get-CopilotOversharingRisk" = "cmdlets/get-copilotoversharingrisk.md" },
+  { "Get-CopilotSensitivityCoverage" = "cmdlets/get-copilotsensitivitycoverage.md" }
+]
+
+[markdown_extensions]
+admonition = {}
+toc = { permalink = true }
