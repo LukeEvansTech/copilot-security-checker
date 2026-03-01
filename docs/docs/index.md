@@ -6,8 +6,8 @@ See [README on GitHub](https://github.com/LukeEvansTech/copilot-security-checker
 
 ## Cmdlets
 
-| Cmdlet | Description |
-| ------ | ----------- |
-| [`Test-CopilotReadiness`](cmdlets/test-copilotreadiness.md) | Run all checks and emit a consolidated report. |
-| [`Get-CopilotOversharingRisk`](cmdlets/get-copilotoversharingrisk.md) | Sample SharePoint sites for over-broad sharing. |
-| [`Get-CopilotSensitivityCoverage`](cmdlets/get-copilotsensitivitycoverage.md) | Inspect the sensitivity-label catalogue. |
+| Cmdlet                                                                        | Description                                     |
+| ----------------------------------------------------------------------------- | ----------------------------------------------- |
+| [`Test-CopilotReadiness`](cmdlets/test-copilotreadiness.md)                   | Run all checks and emit a consolidated report.  |
+| [`Get-CopilotOversharingRisk`](cmdlets/get-copilotoversharingrisk.md)         | Sample SharePoint sites for over-broad sharing. |
+| [`Get-CopilotSensitivityCoverage`](cmdlets/get-copilotsensitivitycoverage.md) | Inspect the sensitivity-label catalogue.        |

@@ -32,11 +32,11 @@ Test-CopilotReadiness | Format-List
 
 ## Cmdlets
 
-| Cmdlet | Description |
-| ------ | ----------- |
-| `Test-CopilotReadiness` | High-level orchestrator. Runs the sub-checks below and returns a single readiness object with traffic-light scoring. |
-| `Get-CopilotOversharingRisk` | Counts SharePoint sites with anyone-link sharing enabled or broad permission grants. |
-| `Get-CopilotSensitivityCoverage` | Returns the percentage of items in scope that carry a sensitivity label (sampled per workload). |
+| Cmdlet                           | Description                                                                                                          |
+| -------------------------------- | -------------------------------------------------------------------------------------------------------------------- |
+| `Test-CopilotReadiness`          | High-level orchestrator. Runs the sub-checks below and returns a single readiness object with traffic-light scoring. |
+| `Get-CopilotOversharingRisk`     | Counts SharePoint sites with anyone-link sharing enabled or broad permission grants.                                 |
+| `Get-CopilotSensitivityCoverage` | Returns the percentage of items in scope that carry a sensitivity label (sampled per workload).                      |
 
 Each cmdlet supports `-Verbose` for diagnostic output.
 
