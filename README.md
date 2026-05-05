@@ -11,7 +11,7 @@ The module focuses on the controls that materially change Copilot's blast radius
 
 ## Status
 
-Early — public seed of an ongoing project. Cmdlets surface the right data shape; some checks emit the structure with TODO markers where a deeper Graph call is still being wired.
+Early — public seed of an ongoing project. Cmdlets surface the right data shape; some checks emit the structure with placeholder markers where a deeper Graph call is still being wired.
 
 ## Install
 

@@ -1,4 +1,4 @@
-function Get-CopilotOversharingRisk {
+﻿function Get-CopilotOversharingRisk {
     <#
     .SYNOPSIS
         Samples SharePoint sites and reports those with broad sharing scope that Copilot would

@@ -2,7 +2,7 @@
 
 PowerShell module to assess a Microsoft 365 tenant's readiness for, and ongoing security posture around, Microsoft 365 Copilot.
 
-See [README on GitHub](https://github.com/LukeEvansTech/copilot-security-checker) for installation and quick start.
+See [Readme on GitHub](https://github.com/LukeEvansTech/copilot-security-checker) for installation and quick start.
 
 ## Cmdlets
 
