@@ -3,7 +3,7 @@
 site_name = "copilot-security-checker"
 site_description = "PowerShell module to assess Microsoft 365 Copilot readiness and ongoing security posture"
 site_author = "Luke Evans"
-site_url = "https://LukeEvansTech.github.io/copilot-security-checker/"
+site_url = "https://lukeevanstech.github.io/copilot-security-checker/"
 copyright = "Copyright © 2026 Luke Evans"
 
 docs_dir = "docs"
