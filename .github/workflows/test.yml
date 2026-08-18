@@ -1,0 +1,116 @@
+---
+name: Test
+
+# The Pester suite had never run. Unlike the Maester-style repos in this estate
+# (maester-copilot-tests, entra-ca-templates), whose tests call a live tenant by
+# design and cannot run headless, every test here mocks Invoke-MgGraphRequest --
+# so the whole suite is offline and belongs in CI.
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  pester:
+    name: Pester
+    # ubuntu-latest only, unlike purview-dlp-export's three-OS matrix. All four
+    # tests mock the Graph transport, so there is no OS-dependent behaviour for
+    # a matrix to find -- and on a private repo macOS minutes bill at 10x and
+    # Windows at 2x. Add the matrix if genuinely cross-platform code lands.
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Ensure Pester 5+ is installed
+        shell: pwsh
+        run: |
+          $existing = Get-Module Pester -ListAvailable |
+            Where-Object { $_.Version.Major -ge 5 } |
+            Select-Object -First 1
+          if ($existing) {
+            Write-Host "Found Pester $($existing.Version)"
+          } else {
+            Write-Host "Installing Pester..."
+            Install-Module Pester -Scope CurrentUser -Force -SkipPublisherCheck -MinimumVersion 5.0.0
+          }
+
+      # Required, not optional. The manifest declares
+      #   RequiredModules = Microsoft.Graph.Authentication >= 2.10.0
+      # so Import-Module on the .psd1 fails outright without it, and the suite
+      # never reaches its first assertion. Verified by running the import with a
+      # PSModulePath containing Pester but not Graph:
+      #   "The required module 'Microsoft.Graph.Authentication' is not loaded."
+      # Pester's Mock also needs the real command to exist before it can be
+      # replaced, so mocking alone does not remove the dependency.
+      - name: Install Microsoft.Graph.Authentication
+        shell: pwsh
+        run: |
+          $required = '2.10.0'
+          $existing = Get-Module Microsoft.Graph.Authentication -ListAvailable |
+            Where-Object { $_.Version -ge [version]$required } |
+            Select-Object -First 1
+          if ($existing) {
+            Write-Host "Found Microsoft.Graph.Authentication $($existing.Version)"
+          } else {
+            Install-Module Microsoft.Graph.Authentication -Scope CurrentUser -Force `
+              -MinimumVersion $required
+          }
+
+      - name: Run Pester tests
+        shell: pwsh
+        run: Invoke-Pester ./tests -CI
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: pester-results
+          path: testResults.xml
+          if-no-files-found: ignore
+
+  parse:
+    name: Parse-check scripts
+    # Only Get-CopilotSensitivityCoverage has assertions today, so the other two
+    # public functions are entirely uncovered. Parsing every file at least
+    # guarantees a syntax error cannot merge.
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Verify every script parses
+        shell: pwsh
+        run: |
+          $failed = $false
+          $files = Get-ChildItem -Path ./src -Recurse -Include *.ps1, *.psm1
+          if (-not $files) {
+            Write-Host "::error::found no scripts to parse -- the check is not working"
+            exit 1
+          }
+          foreach ($file in $files) {
+            $errors = $null
+            [System.Management.Automation.Language.Parser]::ParseFile(
+              $file.FullName, [ref]$null, [ref]$errors) | Out-Null
+            if ($errors) {
+              $failed = $true
+              foreach ($e in $errors) {
+                Write-Host "::error file=$($file.Name)::$($e.Message)"
+              }
+            } else {
+              Write-Host "  ok   $($file.Name)"
+            }
+          }
+          if ($failed) { exit 1 }
