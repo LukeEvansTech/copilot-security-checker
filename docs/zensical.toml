@@ -43,19 +43,12 @@ repo_url = "https://github.com/LukeEvansTech/copilot-security-checker/"
 repo_name = "LukeEvansTech/copilot-security-checker"
 edit_uri = "edit/main/docs/docs"
 
-[[nav]]
+[[project.nav]]
 Home = "index.md"
 
-[[nav]]
+[[project.nav]]
 "Cmdlets" = [
   { "Test-CopilotReadiness" = "cmdlets/test-copilotreadiness.md" },
   { "Get-CopilotOversharingRisk" = "cmdlets/get-copilotoversharingrisk.md" },
   { "Get-CopilotSensitivityCoverage" = "cmdlets/get-copilotsensitivitycoverage.md" }
 ]
-
-[markdown_extensions]
-admonition = {}
-toc = { permalink = true }
-
-[markdown_extensions.pymdownx.superfences]
-custom_fences = [{ name = "mermaid", class = "mermaid", format = "pymdownx.superfences.fence_code_format" }]
