@@ -26,6 +26,7 @@ jobs:
     # a matrix to find -- and on a private repo macOS minutes bill at 10x and
     # Windows at 2x. Add the matrix if genuinely cross-platform code lands.
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -85,6 +86,7 @@ jobs:
     # public functions are entirely uncovered. Parsing every file at least
     # guarantees a syntax error cannot merge.
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
